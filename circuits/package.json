@@ -1,0 +1,23 @@
+{
+  "name": "circuits",
+  "packageManager": "yarn@3.6.2",
+  "scripts": {
+    "test": "mocha --require ts-node/register test/**/*.ts",
+    "prettier": "prettier -c .",
+    "prettier:write": "prettier -w ."
+  },
+  "dependencies": {
+    "circom_tester": "^0.0.20",
+    "circomlib": "^2.0.5"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.10",
+    "@types/mocha": "^10.0.4",
+    "@types/node": "^20.9.0",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

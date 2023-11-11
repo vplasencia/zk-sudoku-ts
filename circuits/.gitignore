@@ -1,0 +1,21 @@
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Swap the comments on the following lines if you don't wish to use zero-installs
+# Documentation here: https://yarnpkg.com/features/zero-installs
+!.yarn/cache
+#.pnp.*
+
+.yarn
+
+node_modules
+
+# Folder that has all the zk artifacts
+build
+
+# Folder that has all the ptau files
+ptau
