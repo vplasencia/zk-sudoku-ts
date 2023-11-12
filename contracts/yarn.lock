@@ -2298,9 +2298,10 @@ __metadata:
     "@types/node": ">=16.0.0"
     "@types/snarkjs": ^0.7.7
     chai: ^4.2.0
+    dotenv: ^16.3.1
     ethers: ^6.4.0
     hardhat: ^2.19.0
-    hardhat-gas-reporter: ^1.0.8
+    hardhat-gas-reporter: ^1.0.9
     prettier: ^3.0.3
     snarkjs: ^0.7.2
     solidity-coverage: ^0.8.0
@@ -2501,6 +2502,13 @@ __metadata:
   dependencies:
     path-type: ^4.0.0
   checksum: fa05e18324510d7283f55862f3161c6759a3f2f8dbce491a2fc14c8324c498286c54282c1f0e933cb930da8419b30679389499b919122952a4f8592362ef4615
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.3.1":
+  version: 16.3.1
+  resolution: "dotenv@npm:16.3.1"
+  checksum: 15d75e7279018f4bafd0ee9706593dd14455ddb71b3bcba9c52574460b7ccaf67d5cf8b2c08a5af1a9da6db36c956a04a1192b101ee102a3e0cf8817bbcf3dfd
   languageName: node
   linkType: hard
 
@@ -3387,7 +3395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat-gas-reporter@npm:^1.0.8":
+"hardhat-gas-reporter@npm:^1.0.9":
   version: 1.0.9
   resolution: "hardhat-gas-reporter@npm:1.0.9"
   dependencies:
