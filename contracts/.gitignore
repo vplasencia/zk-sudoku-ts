@@ -1,3 +1,14 @@
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+
+# Hardhat files
+cache
+artifacts
+
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -12,13 +23,6 @@
 
 .yarn
 
-node_modules
-
-# Folder that has all the zk artifacts
-build
-
-# Folder that has all the ptau files
-ptau
-
 .DS_Store
 
+zk-artifacts
