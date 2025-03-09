@@ -14,7 +14,7 @@ import contractAbi from "../../../utils/abiFiles/Sudoku.json"
 
 const sudokuContractAddress = contractAddress.sudokuContract
 const sudokuContractAbi = contractAbi.abi
-const SEPOLIA_RPC_URL = process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL
+const SEPOLIA_RPC_URL = process.env.NEXT_PUBLIC_ALCHEMY_RPC_URL
 const provider = new JsonRpcProvider(SEPOLIA_RPC_URL)
 const contractNoSigner = new Contract(sudokuContractAddress, sudokuContractAbi, provider)
 
