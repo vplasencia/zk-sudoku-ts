@@ -3,6 +3,7 @@
     "scripts": {
         "start": "hardhat node",
         "compile": "hardhat compile",
+        "deploy:localhost": "hardhat ignition deploy ./ignition/modules/Sudoku.ts --network localhost",
         "test": "hardhat test",
         "copy:zk-artifacts": "chmod u+x ./scripts/copy-zk-files.sh && ./scripts/copy-zk-files.sh",
         "example": "tsx scripts/example.ts",
