@@ -1,13 +1,20 @@
 node_modules
 .env
-coverage
-coverage.json
-typechain
-typechain-types
 
 # Hardhat files
-cache
-artifacts
+/cache
+/artifacts
+
+# TypeChain files
+/typechain
+/typechain-types
+
+# solidity-coverage files
+/coverage
+/coverage.json
+
+# Hardhat Ignition default folder for deployments against a local node
+ignition/deployments/chain-31337
 
 .yarn/*
 !.yarn/patches
@@ -20,9 +27,5 @@ artifacts
 # Documentation here: https://yarnpkg.com/features/zero-installs
 !.yarn/cache
 #.pnp.*
-
-.yarn
-
-.DS_Store
 
 zk-artifacts

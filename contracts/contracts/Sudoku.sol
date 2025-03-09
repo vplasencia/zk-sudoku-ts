@@ -1,5 +1,5 @@
-//SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.19;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.28;
 
 interface IVerifier {
     function verifyProof(

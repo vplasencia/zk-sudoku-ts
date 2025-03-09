@@ -1,0 +1,35 @@
+{
+    "name": "zksudoku-ui",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "copy:zk-artifacts": "chmod u+x ./scripts/copy-zk-files.sh && ./scripts/copy-zk-files.sh",
+        "prettier": "prettier -c .",
+        "prettier:write": "prettier -w ."
+    },
+    "dependencies": {
+        "ethers": "^6.13.5",
+        "next": "15.2.1",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "snarkjs": "^0.7.5"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3",
+        "@tailwindcss/postcss": "^4",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "@types/snarkjs": "^0",
+        "eslint": "^9",
+        "eslint-config-next": "15.2.1",
+        "prettier": "^3.5.3",
+        "tailwindcss": "^4",
+        "typescript": "^5"
+    },
+    "packageManager": "yarn@4.7.0"
+}

@@ -1,23 +1,30 @@
 {
-  "name": "circuits",
-  "packageManager": "yarn@3.6.2",
-  "scripts": {
-    "test": "mocha --require ts-node/register test/**/*.ts",
-    "prettier": "prettier -c .",
-    "prettier:write": "prettier -w ."
-  },
-  "dependencies": {
-    "circom_tester": "^0.0.20",
-    "circomlib": "^2.0.5"
-  },
-  "devDependencies": {
-    "@types/chai": "^4.3.10",
-    "@types/mocha": "^10.0.4",
-    "@types/node": "^20.9.0",
-    "chai": "^4.3.10",
-    "mocha": "^10.2.0",
-    "prettier": "^3.0.3",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
-  }
+    "name": "circuits",
+    "packageManager": "yarn@4.7.0",
+    "scripts": {
+        "compile": "chmod u+x ./scripts/compile.sh && ./scripts/compile.sh",
+        "execute": "chmod u+x ./scripts/execute.sh && ./scripts/execute.sh",
+        "groth16": "chmod u+x ./scripts/execute-groth16.sh && ./scripts/execute-groth16.sh",
+        "plonk": "chmod u+x ./scripts/execute-plonk.sh && ./scripts/execute-plonk.sh",
+        "fflonk": "chmod u+x ./scripts/execute-fflonk.sh && ./scripts/execute-fflonk.sh",
+        "generate-witness": "chmod u+x ./scripts/generate-witness.sh && ./scripts/generate-witness.sh",
+        "remove-build-folder": "chmod u+x ./scripts/remove-build-folder.sh && ./scripts/remove-build-folder.sh",
+        "test": "mocha --require tsx test/**/*.ts",
+        "prettier": "prettier -c .",
+        "prettier:write": "prettier -w ."
+    },
+    "devDependencies": {
+        "@types/chai": "^5.2.0",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "^22.13.10",
+        "chai": "^5.2.0",
+        "circom_tester": "^0.0.20",
+        "mocha": "^11.1.0",
+        "prettier": "^3.5.3",
+        "tsx": "^4.19.3",
+        "typescript": "^5.8.2"
+    },
+    "dependencies": {
+        "circomlib": "^2.0.5"
+    }
 }

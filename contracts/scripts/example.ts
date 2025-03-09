@@ -1,12 +1,12 @@
-import { ethers } from "hardhat"
+import hre from "hardhat"
 
 async function main() {
-    const sudokuVerifier = await ethers.deployContract("SudokuVerifier")
-    await sudokuVerifier.waitForDeployment()
+    const SudokuVerifier = await hre.ethers.getContractFactory("SudokuVerifier")
+    const sudokuVerifier = await SudokuVerifier.deploy()
     console.log("SudokuVerifier Contract deployed to:", sudokuVerifier.target)
 
-    const sudoku = await ethers.deployContract("Sudoku", [sudokuVerifier.target])
-    await sudoku.waitForDeployment()
+    const Sudoku = await hre.ethers.getContractFactory("Sudoku")
+    const sudoku = await Sudoku.deploy(sudokuVerifier)
     console.log("Sudoku Contract deployed to:", sudoku.target)
 
     let board = await sudoku.generateSudokuBoard(new Date().toString())
@@ -14,22 +14,22 @@ async function main() {
 
     let callDataSudoku: any = [
         [
-            "0x1b3bbe287524d1dd779ddecb87690dee3899ddce5834f5f056a5a1379e289dde",
-            "0x0288161bbf9121595a3a92f055575b4de9728ab993bceb55269b85f39515b2f7"
+            "0x23bfb7a9d138854fac87cb396b9e9e00a698bc10ab0180ba67ea82196d09e674",
+            "0x292c5d557fda11814762fdea4cf9e71dc82449ba2267dbc13265d06f99c8a2ea"
         ],
         [
             [
-                "0x2bf2844e4f5a3e0c3af7bae5b813e05d7068985f5009c6b1799262961cb6a1e7",
-                "0x2c54b0db541cead437a4bb2cb818ee6b9a91acb264489e8ba3f1d97da8e52aed"
+                "0x018e71492e0a85f9bd529df40743c372bf343ecab836bd5e0f9ef4dd8f615916",
+                "0x24fd171c615063fe27f97bb37cddb162127cc0879b1182f9582d84d9cd686484"
             ],
             [
-                "0x1af13ac886a1061debae18e6dbb744528267ff331141d0ff4d64e1d9508637f1",
-                "0x16a17506e2cfd71595b83aad43aa6a7d0d9ec3dae0f1c862beec01c02eda7847"
+                "0x106fd26a87be78a0a65a9e83225e240495898cf095a9c1b525af1e2c8df9c488",
+                "0x2a5487bec19bfc54a8a8a48f502011fd84515b48264af279dd5c9cb6b61ef82e"
             ]
         ],
         [
-            "0x103be497d6e489381fa36c3a37812dfefcd8d81f4ab6d67dfaf08122057cf4da",
-            "0x277865456c2e5f5ea370714859ba72878e2d8b177c7b52c8d93405c408236794"
+            "0x1adb38b543d0915668ec85727bc544347fa13ff0e1b63614ec654754fc0054d1",
+            "0x1ba9030494837d58f231c62c87e3a396ab9e25b36c1663ee82dff61e0f1f20c4"
         ],
         [
             "0x0000000000000000000000000000000000000000000000000000000000000000",

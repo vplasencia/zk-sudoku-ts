@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Copy the verifier
-cp ../circuits/build/sudoku/groth16/sudokuVerifier.sol contracts
+cp ../circuits/build/sudoku/groth16/SudokuVerifier.sol contracts
 
 # Create the zk-artifacts folder if it does not exist
 mkdir -p zk-artifacts

@@ -10,8 +10,6 @@
 !.yarn/cache
 #.pnp.*
 
-.yarn
-
 node_modules
 
 # Folder that has all the zk artifacts
@@ -21,4 +19,3 @@ build
 ptau
 
 .DS_Store
-

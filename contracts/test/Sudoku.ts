@@ -1,18 +1,19 @@
 import { time, loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers"
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs"
 import { expect } from "chai"
-import { ethers } from "hardhat"
-import { exportCallDataGroth16 } from "./utils/utils"
+import hre from "hardhat"
+import { groth16 } from "snarkjs"
+import { generateGroth16CallData } from "./utils/generate-groth16-calldata"
 
 describe("Sudoku", function () {
     // We define a fixture to reuse the same setup in every test.
     // We use loadFixture to run this setup once, snapshot that state,
     // and reset Hardhat Network to that snapshot in every test.
     async function deploySudokuFixture() {
-        const SudokuVerifier = await ethers.getContractFactory("SudokuVerifier")
+        const SudokuVerifier = await hre.ethers.getContractFactory("SudokuVerifier")
         const sudokuVerifier = await SudokuVerifier.deploy()
 
-        const Sudoku = await ethers.getContractFactory("Sudoku")
+        const Sudoku = await hre.ethers.getContractFactory("Sudoku")
         const sudoku = await Sudoku.deploy(sudokuVerifier)
 
         return { sudoku, sudokuVerifier }
@@ -55,14 +56,23 @@ describe("Sudoku", function () {
                 solved: solved
             }
 
-            let dataResult: any = await exportCallDataGroth16(
-                input,
-                "./zk-artifacts/sudoku.wasm",
-                "./zk-artifacts/sudoku_final.zkey"
+            const wasmPath = "./zk-artifacts/sudoku.wasm"
+            const zkeyPath = "./zk-artifacts/sudoku_final.zkey"
+
+            // Generate proof
+            const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
+
+            // Get calldata for the contract
+            let dataResult = await generateGroth16CallData(proof, publicSignals)
+
+            // Call the verifier contract.
+            let result = await sudokuVerifier.verifyProof(
+                dataResult.a,
+                dataResult.b,
+                dataResult.c,
+                dataResult.input
             )
 
-            // Call the function.
-            let result = await sudokuVerifier.verifyProof(dataResult.a, dataResult.b, dataResult.c, dataResult.Input)
             expect(result).to.equal(true)
         })
         it("Should return false for invalid proof on-chain", async function () {
@@ -73,12 +83,12 @@ describe("Sudoku", function () {
                 [0, 0]
             ]
             let c = [0, 0]
-            let Input = new Array(81).fill(0)
+            let input = new Array(81).fill(0)
 
-            let dataResult: any = { a, b, c, Input }
+            let dataResult: any = { a, b, c, input }
 
             // Call the function.
-            let result = await sudokuVerifier.verifyProof(dataResult.a, dataResult.b, dataResult.c, dataResult.Input)
+            let result = await sudokuVerifier.verifyProof(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
             expect(result).to.equal(false)
         })
         it("Should verify Sudoku successfully", async function () {
@@ -112,14 +122,17 @@ describe("Sudoku", function () {
                 solved: solved
             }
 
-            let dataResult: any = await exportCallDataGroth16(
-                input,
-                "./zk-artifacts/sudoku.wasm",
-                "./zk-artifacts/sudoku_final.zkey"
-            )
+            const wasmPath = "./zk-artifacts/sudoku.wasm"
+            const zkeyPath = "./zk-artifacts/sudoku_final.zkey"
+
+            // Generate proof
+            const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
+
+            // Get calldata for the contract
+            let dataResult = await generateGroth16CallData(proof, publicSignals)
 
             // Call the function.
-            let result = await sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.Input)
+            let result = await sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
             expect(result).to.equal(true)
         })
         it("Should be reverted on Sudoku verification because the board is not in the board list", async function () {
@@ -153,13 +166,16 @@ describe("Sudoku", function () {
                 solved: solved
             }
 
-            let dataResult: any = await exportCallDataGroth16(
-                input,
-                "./zk-artifacts/sudoku.wasm",
-                "./zk-artifacts/sudoku_final.zkey"
-            )
+            const wasmPath = "./zk-artifacts/sudoku.wasm"
+            const zkeyPath = "./zk-artifacts/sudoku_final.zkey"
 
-            await expect(sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.Input)).to.be.reverted
+            // Generate proof
+            const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
+
+            // Get calldata for the contract
+            let dataResult = await generateGroth16CallData(proof, publicSignals)
+
+            await expect(sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)).to.be.reverted
         })
     })
 })
