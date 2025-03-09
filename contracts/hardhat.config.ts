@@ -26,7 +26,7 @@ const config: HardhatUserConfig = {
             allowUnlimitedContractSize: true
         },
         sepolia: {
-            url: "https://rpc2.sepolia.org",
+            url: process.env.RPC_URL || "https://rpc2.sepolia.org",
             chainId: 11155111,
             accounts: process.env.NODE_ENV !== "development" && !process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY!] : []
         }
@@ -36,6 +36,9 @@ const config: HardhatUserConfig = {
         enabled: process.env.REPORT_GAS === "true",
         coinmarketcap: process.env.COINMARKETCAP_API_KEY
     },
+    etherscan: {
+        apiKey: process.env.ETHERSCAN_API_KEY 
+    }
 }
 
 export default config
