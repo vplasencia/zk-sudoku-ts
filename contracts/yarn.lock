@@ -2380,6 +2380,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:^16.4.7":
+  version: 16.4.7
+  resolution: "dotenv@npm:16.4.7"
+  checksum: 10c0/be9f597e36a8daf834452daa1f4cc30e5375a5968f98f46d89b16b983c567398a330580c88395069a77473943c06b877d1ca25b4afafcdd6d4adb549e8293462
+  languageName: node
+  linkType: hard
+
 "dunder-proto@npm:^1.0.1":
   version: 1.0.1
   resolution: "dunder-proto@npm:1.0.1"
@@ -3349,6 +3356,7 @@ __metadata:
     "@types/mocha": "npm:>=9.1.0"
     "@types/snarkjs": "npm:^0"
     chai: "npm:^4.2.0"
+    dotenv: "npm:^16.4.7"
     ethers: "npm:^6.4.0"
     hardhat: "npm:^2.22.19"
     hardhat-gas-reporter: "npm:^1.0.8"
