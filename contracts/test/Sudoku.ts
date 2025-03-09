@@ -175,7 +175,52 @@ describe("Sudoku", function () {
             // Get calldata for the contract
             let dataResult = await generateGroth16CallData(proof, publicSignals)
 
-            await expect(sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)).to.be.reverted
+            await expect(sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)).to.be.revertedWith("This board does not exist")
+        })
+        it("Should be reverted on Sudoku verification because the proof is incorrect", async function () {
+            const { sudoku } = await loadFixture(deploySudokuFixture)
+            const unsolved = [
+                [1, 2, 7, 5, 8, 4, 6, 9, 3],
+                [8, 5, 6, 3, 7, 9, 1, 2, 4],
+                [3, 4, 9, 6, 2, 1, 8, 7, 5],
+                [4, 7, 1, 9, 5, 8, 2, 3, 6],
+                [2, 6, 8, 7, 1, 3, 5, 4, 9],
+                [9, 3, 5, 4, 6, 2, 7, 1, 8],
+                [5, 8, 3, 2, 9, 7, 4, 6, 1],
+                [7, 1, 4, 8, 3, 6, 9, 5, 2],
+                [6, 9, 2, 1, 4, 5, 3, 0, 7]
+            ]
+
+            const solved = [
+                [1, 2, 7, 5, 8, 4, 6, 9, 3],
+                [8, 5, 6, 3, 7, 9, 1, 2, 4],
+                [3, 4, 9, 6, 2, 1, 8, 7, 5],
+                [4, 7, 1, 9, 5, 8, 2, 3, 6],
+                [2, 6, 8, 7, 1, 3, 5, 4, 9],
+                [9, 3, 5, 4, 6, 2, 7, 1, 8],
+                [5, 8, 3, 2, 9, 7, 4, 6, 1],
+                [7, 1, 4, 8, 3, 6, 9, 5, 2],
+                [6, 9, 2, 1, 4, 5, 3, 8, 7]
+            ]
+
+            const input = {
+                unsolved: unsolved,
+                solved: solved
+            }
+
+            const wasmPath = "./zk-artifacts/sudoku.wasm"
+            const zkeyPath = "./zk-artifacts/sudoku_final.zkey"
+
+            // Generate proof
+            const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
+
+            // Get calldata for the contract
+            let dataResult = await generateGroth16CallData(proof, publicSignals)
+
+            // Change the first element of the proof to make it incorrect
+            dataResult.a[0] = "10"
+
+            await expect(sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)).to.be.revertedWith("Filed proof check")
         })
     })
 })
