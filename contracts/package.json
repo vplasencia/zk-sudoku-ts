@@ -6,6 +6,8 @@
         "deploy:localhost": "hardhat ignition deploy ./ignition/modules/Sudoku.ts --network localhost",
         "deploy:sepolia": "hardhat ignition deploy ./ignition/modules/Sudoku.ts --network sepolia",
         "deploy-verify:sepolia": "hardhat ignition deploy ./ignition/modules/Sudoku.ts --network sepolia --verify",
+        "deploy:optimism-sepolia": "hardhat ignition deploy ./ignition/modules/Sudoku.ts --network optimism-sepolia",
+        "deploy-verify:optimism-sepolia": "hardhat ignition deploy ./ignition/modules/Sudoku.ts --network optimism-sepolia --verify",
         "test": "hardhat test",
         "test:report-gas": "REPORT_GAS=true hardhat test",
         "test:coverage": "hardhat coverage",

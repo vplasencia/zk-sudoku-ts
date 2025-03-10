@@ -3,7 +3,7 @@ import "@nomicfoundation/hardhat-toolbox"
 import "hardhat-gas-reporter"
 import { config as dotenvConfig } from "dotenv"
 
-dotenvConfig();
+dotenvConfig()
 
 if (process.env.NODE_ENV !== "development" && !process.env.PRIVATE_KEY) {
     console.error("Please set your PRIVATE_KEY in a .env file")
@@ -28,7 +28,12 @@ const config: HardhatUserConfig = {
         sepolia: {
             url: process.env.RPC_URL || "https://rpc2.sepolia.org",
             chainId: 11155111,
-            accounts: process.env.NODE_ENV !== "development" && !process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY!] : []
+            accounts: [`0x${process.env.PRIVATE_KEY}`]
+        },
+        "optimism-sepolia": {
+            url: process.env.RPC_URL || "https://sepolia.optimism.io",
+            chainId: 11155420,
+            accounts: [`0x${process.env.PRIVATE_KEY}`]
         }
     },
     gasReporter: {
@@ -37,7 +42,7 @@ const config: HardhatUserConfig = {
         coinmarketcap: process.env.COINMARKETCAP_API_KEY
     },
     etherscan: {
-        apiKey: process.env.ETHERSCAN_API_KEY 
+        apiKey: process.env.ETHERSCAN_API_KEY
     }
 }
 
