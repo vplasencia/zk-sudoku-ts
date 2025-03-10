@@ -101,15 +101,11 @@ export default function Sudoku() {
         try {
             const board = await contractNoSigner.generateSudokuBoard(new Date().toString())
 
-            console.log("board", board.map(String))
-
             const newArray = board.map((arr: string[]) => {
                 return arr.slice().map(Number)
             })
             setSudokuInitial(newArray.map((row: number[]) => [...row]))
             setSudoku(newArray)
-
-            console.log("newArray", newArray)
 
             // Generates a 9x9 grid (2D array) filled with `false` values, representing an empty boolean matrix.
             const temp = Array.from({ length: 9 }, () => Array(9).fill(false))
@@ -174,8 +170,6 @@ export default function Sudoku() {
     }
 
     useEffect(() => {
-        console.log("Sudoku page")
-
         initializeBoard()
     }, [initializeBoard])
     return (
