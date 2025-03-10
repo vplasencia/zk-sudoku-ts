@@ -18,13 +18,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
-        <div className="flex flex-col min-h-screen px-2 bg-slate-900 text-slate-300">
-          <Header />
-          <main className="mb-auto">{children}</main>
-          <Footer />
-        </div>
-      </body>
-    </html>
+            <body className={inter.className} suppressHydrationWarning>
+                <div className="flex flex-col min-h-screen px-2 bg-slate-900 text-slate-300">
+                    <Header />
+                    <main className="mb-auto">{children}</main>
+                    <Footer />
+                </div>
+            </body>
+        </html>
     )
 }

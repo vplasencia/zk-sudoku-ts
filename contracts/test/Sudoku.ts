@@ -66,12 +66,7 @@ describe("Sudoku", function () {
             let dataResult = await generateGroth16CallData(proof, publicSignals)
 
             // Call the verifier contract.
-            let result = await sudokuVerifier.verifyProof(
-                dataResult.a,
-                dataResult.b,
-                dataResult.c,
-                dataResult.input
-            )
+            let result = await sudokuVerifier.verifyProof(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
 
             expect(result).to.equal(true)
         })
@@ -175,7 +170,9 @@ describe("Sudoku", function () {
             // Get calldata for the contract
             let dataResult = await generateGroth16CallData(proof, publicSignals)
 
-            await expect(sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)).to.be.revertedWith("This board does not exist")
+            await expect(
+                sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
+            ).to.be.revertedWith("This board does not exist")
         })
         it("Should be reverted on Sudoku verification because the proof is incorrect", async function () {
             const { sudoku } = await loadFixture(deploySudokuFixture)
@@ -220,7 +217,9 @@ describe("Sudoku", function () {
             // Change the first element of the proof to make it incorrect
             dataResult.a[0] = "10"
 
-            await expect(sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)).to.be.revertedWith("Filed proof check")
+            await expect(
+                sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
+            ).to.be.revertedWith("Filed proof check")
         })
     })
 })

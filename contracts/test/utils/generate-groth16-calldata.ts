@@ -1,9 +1,9 @@
 import { groth16, type Groth16Proof, type PublicSignals, type NumericString } from "snarkjs"
 
 export type CallDataGroth16 = {
-    a: [NumericString, NumericString],
-    b: [[NumericString, NumericString], [NumericString, NumericString]],
-    c: [NumericString, NumericString],
+    a: [NumericString, NumericString]
+    b: [[NumericString, NumericString], [NumericString, NumericString]]
+    c: [NumericString, NumericString]
     input: NumericString[]
 }
 
@@ -17,7 +17,7 @@ export async function generateGroth16CallData(
         .replace(/["[\]\s]/g, "")
         .split(",")
         .map(BigInt)
-        .map(String);
+        .map(String)
 
     const a: [NumericString, NumericString] = [argv[0], argv[1]]
     const b: [[NumericString, NumericString], [NumericString, NumericString]] = [
