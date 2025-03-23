@@ -61,7 +61,7 @@ describe("Sudoku", function () {
             // Generate proof
             const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
 
-            // Packs a Snarkjs Groth16 proof into a single list usable as calldata in Solidity (public signals are not included).
+            // Pack a Snarkjs Groth16 proof into a single list usable as calldata in Solidity (public signals are not included).
             const points = packGroth16Proof(proof)
 
             const a: [NumericString, NumericString] = [points[0], points[1]]

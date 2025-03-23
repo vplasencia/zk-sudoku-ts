@@ -54,12 +54,11 @@ export default function Sudoku() {
             // Generate proof
             const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
 
-            // Get calldata for the contract
+            // Pack a Snarkjs Groth16 proof into a single list usable as calldata in Solidity (public signals are not included).
             const points = packGroth16Proof(proof)
 
-            // console.log("calldata", calldata);
-
             try {
+                // Verify proof
                 const result = await contractNoSigner.verifySudoku(points, publicSignals)
                 console.log("result", result)
                 setLoadingVerifyBtn(false)
