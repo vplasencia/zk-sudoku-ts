@@ -3,10 +3,10 @@ pragma solidity ^0.8.28;
 
 interface IVerifier {
     function verifyProof(
-        uint256[2] memory a,
-        uint256[2][2] memory b,
-        uint256[2] memory c,
-        uint256[81] memory input
+        uint256[2] calldata a,
+        uint256[2][2] calldata b,
+        uint256[2] calldata c,
+        uint256[81] calldata input
     ) external view returns (bool);
 }
 
@@ -53,15 +53,6 @@ contract Sudoku {
         verifierAddr = _verifierAddr;
     }
 
-    function verifyProof(
-        uint256[2] memory a,
-        uint256[2][2] memory b,
-        uint256[2] memory c,
-        uint256[81] memory input
-    ) public view returns (bool) {
-        return IVerifier(verifierAddr).verifyProof(a, b, c, input);
-    }
-
     function verifySudokuBoard(
         uint256[81] memory board
     ) private view returns (bool) {
@@ -84,13 +75,17 @@ contract Sudoku {
     }
 
     function verifySudoku(
-        uint256[2] memory a,
-        uint256[2][2] memory b,
-        uint256[2] memory c,
-        uint256[81] memory input
+        uint256[8] calldata points,
+        uint256[81] calldata input
     ) public view returns (bool) {
         require(verifySudokuBoard(input), "This board does not exist");
-        require(verifyProof(a, b, c, input), "Filed proof check");
+        require(
+            IVerifier(verifierAddr).verifyProof([points[0], points[1]],
+                [[points[2], points[3]], [points[4], points[5]]],
+                [points[6], points[7]],
+                input),
+            "Failed proof check"
+        );
         return true;
     }
 

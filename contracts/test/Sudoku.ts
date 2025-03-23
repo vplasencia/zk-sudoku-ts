@@ -2,8 +2,8 @@ import { time, loadFixture } from "@nomicfoundation/hardhat-toolbox/network-help
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs"
 import { expect } from "chai"
 import hre from "hardhat"
-import { groth16 } from "snarkjs"
-import { generateGroth16CallData } from "./utils/generate-groth16-calldata"
+import { groth16, NumericString } from "snarkjs"
+import { packGroth16Proof } from "@zk-kit/utils/proof-packing"
 
 describe("Sudoku", function () {
     // We define a fixture to reuse the same setup in every test.
@@ -62,28 +62,31 @@ describe("Sudoku", function () {
             // Generate proof
             const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
 
-            // Get calldata for the contract
-            let dataResult = await generateGroth16CallData(proof, publicSignals)
+            const points = packGroth16Proof(proof)
+
+            const a: [NumericString, NumericString] = [points[0], points[1]]
+
+            const b: [[NumericString, NumericString], [NumericString, NumericString]] = [[points[2], points[3]], [points[4], points[5]]]
+
+            const c: [NumericString, NumericString] = [points[6], points[7]]
 
             // Call the verifier contract.
-            let result = await sudokuVerifier.verifyProof(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
+            let result = await sudokuVerifier.verifyProof(a, b, c, publicSignals)
 
             expect(result).to.equal(true)
         })
         it("Should return false for invalid proof on-chain", async function () {
             const { sudokuVerifier } = await loadFixture(deploySudokuFixture)
-            let a = [0, 0]
-            let b = [
-                [0, 0],
-                [0, 0]
+            let a: [NumericString, NumericString] = ["0", "0"]
+            let b: [[NumericString, NumericString], [NumericString, NumericString]] = [
+                ["0", "0"],
+                ["0", "0"]
             ]
-            let c = [0, 0]
-            let input = new Array(81).fill(0)
-
-            let dataResult: any = { a, b, c, input }
+            let c: [NumericString, NumericString] = ["0", "0"]
+            let input: NumericString[] = new Array(81).fill("0")
 
             // Call the function.
-            let result = await sudokuVerifier.verifyProof(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
+            let result = await sudokuVerifier.verifyProof(a, b, c, input)
             expect(result).to.equal(false)
         })
         it("Should verify Sudoku successfully", async function () {
@@ -123,11 +126,10 @@ describe("Sudoku", function () {
             // Generate proof
             const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
 
-            // Get calldata for the contract
-            let dataResult = await generateGroth16CallData(proof, publicSignals)
+            const points = packGroth16Proof(proof)
 
             // Call the function.
-            let result = await sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
+            let result = await sudoku.verifySudoku(points, publicSignals)
             expect(result).to.equal(true)
         })
         it("Should be reverted on Sudoku verification because the board is not in the board list", async function () {
@@ -167,11 +169,10 @@ describe("Sudoku", function () {
             // Generate proof
             const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
 
-            // Get calldata for the contract
-            let dataResult = await generateGroth16CallData(proof, publicSignals)
+            const points = packGroth16Proof(proof)
 
             await expect(
-                sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
+                sudoku.verifySudoku(points, publicSignals)
             ).to.be.revertedWith("This board does not exist")
         })
         it("Should be reverted on Sudoku verification because the proof is incorrect", async function () {
@@ -211,15 +212,14 @@ describe("Sudoku", function () {
             // Generate proof
             const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
 
-            // Get calldata for the contract
-            let dataResult = await generateGroth16CallData(proof, publicSignals)
+            const points = packGroth16Proof(proof)
 
             // Change the first element of the proof to make it incorrect
-            dataResult.a[0] = "10"
+            points[0] = "10"
 
             await expect(
-                sudoku.verifySudoku(dataResult.a, dataResult.b, dataResult.c, dataResult.input)
-            ).to.be.revertedWith("Filed proof check")
+                sudoku.verifySudoku(points, publicSignals)
+            ).to.be.revertedWith("Failed proof check")
         })
     })
 })

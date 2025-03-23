@@ -29,7 +29,7 @@ if [ -f ./ptau/powersOfTau28_hez_final_${PTAU}.ptau ]; then
     echo "----- powersOfTau28_hez_final_${PTAU}.ptau already exists -----"
 else
     echo "----- Download powersOfTau28_hez_final_${PTAU}.ptau -----"
-    wget -P ./ptau https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_${PTAU}.ptau
+    wget -P ./ptau https://storage.googleapis.com/zkevm/ptau/powersOfTau28_hez_final_${PTAU}.ptau
 fi
 
 # Build directory path
