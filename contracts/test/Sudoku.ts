@@ -1,8 +1,7 @@
-import { time, loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers"
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs"
+import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers"
 import { expect } from "chai"
 import hre from "hardhat"
-import { groth16, NumericString } from "snarkjs"
+import { groth16, type NumericString } from "snarkjs"
 import { packGroth16Proof } from "@zk-kit/utils/proof-packing"
 
 describe("Sudoku", function () {
