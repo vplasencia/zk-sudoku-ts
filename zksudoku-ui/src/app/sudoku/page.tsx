@@ -37,7 +37,7 @@ export default function Sudoku() {
         }
     }
 
-    const calculateProof = async () => {
+    const verifySudoku = async () => {
         setLoadingVerifyBtn(true)
         console.log("sudokuInitial", sudokuInitial)
         console.log("sudoku", sudoku)
@@ -72,10 +72,6 @@ export default function Sudoku() {
             setLoadingVerifyBtn(false)
             alert("Failed to generate proof")
         }
-    }
-
-    const verifySudoku = async () => {
-        calculateProof()
     }
 
     const renderVerifySudoku = () => {
