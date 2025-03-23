@@ -7,8 +7,8 @@ import NumbersKeyboard from "@/components/sudoku/NumbersKeyboard"
 import React, { useEffect, useState, useCallback } from "react"
 import { Contract, JsonRpcProvider } from "ethers"
 import { groth16 } from "snarkjs"
+import { packGroth16Proof } from "@zk-kit/utils/proof-packing"
 import styles from "./sudoku.module.css"
-import { generateGroth16CallData } from "@/zkproof/generate-groth16-calldata"
 import contractAddress from "../../../utils/contractaddress.json"
 import contractAbi from "../../../utils/abiFiles/Sudoku.json"
 
@@ -55,17 +55,12 @@ export default function Sudoku() {
             const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
 
             // Get calldata for the contract
-            const calldata = await generateGroth16CallData(proof, publicSignals)
-
-            if (!calldata) {
-                setLoadingVerifyBtn(false)
-                return "Invalid inputs to generate witness."
-            }
+            const points = packGroth16Proof(proof)
 
             // console.log("calldata", calldata);
 
             try {
-                const result = await contractNoSigner.verifySudoku(calldata.a, calldata.b, calldata.c, calldata.input)
+                const result = await contractNoSigner.verifySudoku(points, publicSignals)
                 console.log("result", result)
                 setLoadingVerifyBtn(false)
                 alert("Successfully verified")

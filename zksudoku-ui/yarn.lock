@@ -816,6 +816,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@zk-kit/utils@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@zk-kit/utils@npm:1.3.0"
+  dependencies:
+    buffer: "npm:^6.0.3"
+  checksum: 10c0/e48b6d319eea6247efdc2c7c93140406adf20edc072000ac5e865f7758f653340d310a640603e70940f7e8041fffeb118c4a071618de7dc1d170f6c628195905
+  languageName: node
+  linkType: hard
+
 "acorn-jsx@npm:^5.3.2":
   version: 5.3.2
   resolution: "acorn-jsx@npm:5.3.2"
@@ -1038,6 +1047,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"base64-js@npm:^1.3.1":
+  version: 1.5.1
+  resolution: "base64-js@npm:1.5.1"
+  checksum: 10c0/f23823513b63173a001030fae4f2dabe283b99a9d324ade3ad3d148e218134676f1ee8568c877cd79ec1c53158dcf2d2ba527a97c606618928ba99dd930102bf
+  languageName: node
+  linkType: hard
+
 "bfj@npm:^7.0.2":
   version: 7.1.0
   resolution: "bfj@npm:7.1.0"
@@ -1093,6 +1109,16 @@ __metadata:
   dependencies:
     fill-range: "npm:^7.1.1"
   checksum: 10c0/7c6dfd30c338d2997ba77500539227b9d1f85e388a5f43220865201e407e076783d0881f2d297b9f80951b4c957fcf0b51c1d2d24227631643c3f7c284b0aa04
+  languageName: node
+  linkType: hard
+
+"buffer@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "buffer@npm:6.0.3"
+  dependencies:
+    base64-js: "npm:^1.3.1"
+    ieee754: "npm:^1.2.1"
+  checksum: 10c0/2a905fbbcde73cc5d8bd18d1caa23715d5f83a5935867c2329f0ac06104204ba7947be098fe1317fbd8830e26090ff8e764f08cd14fefc977bb248c3487bcbd0
   languageName: node
   linkType: hard
 
@@ -2230,6 +2256,13 @@ __metadata:
   version: 0.1.4
   resolution: "hoopy@npm:0.1.4"
   checksum: 10c0/4ef749e1a13d46cae52014b9de452635637086c333fc67245369a1262dee806386354a4ed845d507e59e5a0d3aef55246c0ec66f5bf2908d40eb77e7dff2a254
+  languageName: node
+  linkType: hard
+
+"ieee754@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "ieee754@npm:1.2.1"
+  checksum: 10c0/b0782ef5e0935b9f12883a2e2aa37baa75da6e66ce6515c168697b42160807d9330de9a32ec1ed73149aea02e0d822e572bca6f1e22bdcbd2149e13b050b17bb
   languageName: node
   linkType: hard
 
@@ -4149,6 +4182,7 @@ __metadata:
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
     "@types/snarkjs": "npm:^0"
+    "@zk-kit/utils": "npm:^1.3.0"
     eslint: "npm:^9"
     eslint-config-next: "npm:15.2.1"
     ethers: "npm:^6.13.5"
