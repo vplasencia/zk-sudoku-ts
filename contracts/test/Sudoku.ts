@@ -62,11 +62,15 @@ describe("Sudoku", function () {
             // Generate proof
             const { proof, publicSignals } = await groth16.fullProve(input, wasmPath, zkeyPath)
 
+            // Packs a Snarkjs Groth16 proof into a single list usable as calldata in Solidity (public signals are not included).
             const points = packGroth16Proof(proof)
 
             const a: [NumericString, NumericString] = [points[0], points[1]]
 
-            const b: [[NumericString, NumericString], [NumericString, NumericString]] = [[points[2], points[3]], [points[4], points[5]]]
+            const b: [[NumericString, NumericString], [NumericString, NumericString]] = [
+                [points[2], points[3]],
+                [points[4], points[5]]
+            ]
 
             const c: [NumericString, NumericString] = [points[6], points[7]]
 
@@ -171,9 +175,7 @@ describe("Sudoku", function () {
 
             const points = packGroth16Proof(proof)
 
-            await expect(
-                sudoku.verifySudoku(points, publicSignals)
-            ).to.be.revertedWith("This board does not exist")
+            await expect(sudoku.verifySudoku(points, publicSignals)).to.be.revertedWith("This board does not exist")
         })
         it("Should be reverted on Sudoku verification because the proof is incorrect", async function () {
             const { sudoku } = await loadFixture(deploySudokuFixture)
@@ -217,9 +219,7 @@ describe("Sudoku", function () {
             // Change the first element of the proof to make it incorrect
             points[0] = "10"
 
-            await expect(
-                sudoku.verifySudoku(points, publicSignals)
-            ).to.be.revertedWith("Failed proof check")
+            await expect(sudoku.verifySudoku(points, publicSignals)).to.be.revertedWith("Failed proof check")
         })
     })
 })
